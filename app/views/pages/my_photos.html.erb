@@ -1,0 +1,33 @@
+<%= render 'pages/home' unless user_signed_in? %>
+
+<%if !@photo.empty?  %>
+<div id="cards" class="transitions-enabled">
+  <% @photo.each do |card| %>
+    <div class="box panel panel-default">
+          <%= link_to image_tag(card.image.url(:medium), :style => "width:212px;height: 159px;"), card %>
+        <div class="panel-body">
+          <div class="panel-heading center">
+              <p><strong><%= card.title.capitalize %></strong></p>
+            </div>
+              <i>Description:</i><p><%= card.text.capitalize %></p>
+              <i>Posted By:</i><b><%a=User.find(card.user_id)%>
+              <%=a.name.capitalize %>
+              </b>
+         </div>  
+    </div>
+  <% end %>
+</div>
+
+<div class="center">
+<%= will_paginate @photo, renderer: BootstrapPagination::Rails %>
+<%else %>
+<div class="container">
+    <%# flash.each do |name, msg| %>
+    <div class="alert alert-info">
+       <%= "There is no images is added by you" %>
+    </div>
+      
+    <%# end %>
+    <%end %>
+  </div>
+</div>
